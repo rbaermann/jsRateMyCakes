@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Rate My Cakes</h1>
+
+    <div class="newCake">
+      <h3>Submit a cake for rating!</h3>
+      <form>
+      
+        {{ newCake | json }}<br>
+        <label>Baker Name:
+          <input type="text" name="newCake.baker" [(ngModel)]="newCake.baker">
+        </label>
+        <br>
+
+        <label>Image URL:
+          <input type="text" name="newCake.image" [(ngModel)]="newCake.image">
+        </label>
+
+        <input type="submit" value="Submit" (click)="onSubmit()">
+
+      </form>
+    </div>
+
+    <div class="allCakes">
+      <div *ngFor="let cake of cakes">
+        <p>{{ cake.baker }}</p>
+        <img class="cakeImg" [src]="cake.image" (click)="showCake(cake)">
+
+        <form class="ratingForm">
+
+          <label>
+            <select name="newRating.rating" [(ngModel)]="newRating.rating">
+              <option value="1">1 Star</option>
+              <option value="2">2 Stars</option>
+              <option value="3">3 Stars</option>
+              <option value="4">4 Stars</option>
+              <option value="5">5 Stars</option>
+            </select>
+          </label><br>
+
+          <label>
+            <input type="text" name="newRating.comment" [(ngModel)]="newRating.comment">
+          </label><br>
+
+          <input type="submit" value="Rate!" (click)="createRating(cake._id)">
+
+        </form>
+
+        <!-- <button (click)="deleteCake(cake)">Delete Cake</button> -->
+      </div>
+    </div>
+
+    <app-cakes *ngIf="selectedCake" [cakeToShow]="selectedCake"></app-cakes>
+  </body>
+</html>
